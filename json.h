@@ -19,7 +19,7 @@ next_pair:
 			for (i=i; i<size; i++) {
 				if (json[i] == '\"' && json[i-1] != '\\') break;
 			}
-			if (json[i] == 0) return -1;
+			if (i == size-1) return -1;
 			
 			keysize = json + i - key;
 			i++;
@@ -29,15 +29,19 @@ next_pair:
 				
 				/* object values */
 				if (json[i] == '{') {
+					inside_string = 0;
 					acc = 0;
 					value = json + i;
 					
 					for (i=i; i<size; i++) {
+						if (json[i] == '\"' && json[i-1] != '\\') inside_string = !inside_string;
+						if (inside_string) continue;
+						
 						if (json[i] == '{') acc++;
 						else if (json[i] == '}') acc--;
 						if (acc == 0) break;
 					}
-					if (json[i] == 0) return -1;
+					if (i == size-1) return -1;
 					
 					valuesize = json + i - value + 1;
 					
@@ -76,7 +80,7 @@ next_pair:
 						else if (json[i] == '}') acc--;
 						if (acc == 0) break;
 					}
-					if (json[i] == 0) return -1;
+					if (i == size-1) return -1;
 					
 					goto next_pair;
 				}
@@ -89,7 +93,7 @@ next_pair:
 					for (i=i; i<size; i++) {
 						if (json[i] == '\"' && json[i-1] != '\\') break;
 					}
-					if (json[i] == 0) return -1;
+					if (i == size-1) return -1;
 					
 					valuesize = json + i - value;
 					i++;
@@ -108,7 +112,7 @@ next_pair:
 						if (json[i] == ',') break;
 						if (json[i] == '}') break;
 					}
-					if (json[i] == 0) return -1;
+					if (i == size-1) return -1;
 					
 					valuesize = json + i - value;
 					i++;
@@ -138,7 +142,6 @@ next_pair:
 					
 					if ((ret = callback(0, 0, 0, 0, element, elementsize, userdata))) return ret;
 					
-					/* try parse in case of object element */
 					json_parse(element, elementsize, callback, userdata);
 					
 					element = json + i + 1;
@@ -148,7 +151,7 @@ next_pair:
 				else if (json[i] == '}') acc--;
 				if (acc == 0) break;
 			}
-			if (json[i] == 0) return -1;
+			if (i == size-1) return -1;
 			
 			return 0;
 		}

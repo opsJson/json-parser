@@ -19,7 +19,7 @@ next_pair:
 			for (i=i; i<size; i++) {
 				if (json[i] == '\"' && json[i-1] != '\\') break;
 			}
-			if (i == size-1) return -1;
+			if (json[i] == 0) return -1;
 			
 			keysize = json + i - key;
 			i++;
@@ -41,7 +41,7 @@ next_pair:
 						else if (json[i] == '}') acc--;
 						if (acc == 0) break;
 					}
-					if (i == size-1) return -1;
+					if (json[i] == 0) return -1;
 					
 					valuesize = json + i - value + 1;
 					
@@ -80,7 +80,7 @@ next_pair:
 						else if (json[i] == '}') acc--;
 						if (acc == 0) break;
 					}
-					if (i == size-1) return -1;
+					if (json[i] == 0) return -1;
 					
 					goto next_pair;
 				}
@@ -93,7 +93,7 @@ next_pair:
 					for (i=i; i<size; i++) {
 						if (json[i] == '\"' && json[i-1] != '\\') break;
 					}
-					if (i == size-1) return -1;
+					if (json[i] == 0) return -1;
 					
 					valuesize = json + i - value;
 					i++;
@@ -112,7 +112,7 @@ next_pair:
 						if (json[i] == ',') break;
 						if (json[i] == '}') break;
 					}
-					if (i == size-1) return -1;
+					if (json[i] == 0) return -1;
 					
 					valuesize = json + i - value;
 					i++;
@@ -151,7 +151,7 @@ next_pair:
 				else if (json[i] == '}') acc--;
 				if (acc == 0) break;
 			}
-			if (i == size-1) return -1;
+			if (json[i] == 0) return -1;
 			
 			return 0;
 		}

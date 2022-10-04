@@ -9,6 +9,128 @@ gcc example.c -o example
 ./example [file.json]
 ```
 
+# Example
+
+## Input
+```json
+{
+    "glossary": {
+        "title": "example glossary",
+		"GlossDiv": {
+            "title": "S",
+			"GlossList": {
+                "GlossEntry": {
+                    "ID": "SGML",
+					"SortAs": "SGML",
+					"GlossTerm": "Standard Generalized Markup Language",
+					"Acronym": "SGML",
+					"Abbrev": "ISO 8879:1986",
+					"GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+						"GlossSeeAlso": ["GML", "XML"]
+                    },
+					"GlossSee": "markup"
+                }
+            }
+        }
+    }
+}	
+```
+## Callback function
+```c
+int callback(char *key, int keysize, char *value, int valuesize, char *element, int elementsize, void *userdata) {
+	(void)userdata;
+	if (element) {
+		if (key) printf("[%.*s] => [%.*s]\n", keysize, key, elementsize, element);
+		else printf("[%.*s]\n", elementsize, element);
+	}
+	else printf("[%.*s] => [%.*s]\n", keysize, key, valuesize, value);
+	return 0;
+}
+```
+
+## Output
+```console
+[glossary] => [{
+        "title": "example glossary",
+                "GlossDiv": {
+            "title": "S",
+                        "GlossList": {
+                "GlossEntry": {
+                    "ID": "SGML",
+                                        "SortAs": "SGML",
+                                        "GlossTerm": "Standard Generalized Markup Language",
+                                        "Acronym": "SGML",
+                                        "Abbrev": "ISO 8879:1986",
+                                        "GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                                                "GlossSeeAlso": ["GML", "XML"]
+                    },
+                                        "GlossSee": "markup"
+                }
+            }
+        }
+    }]
+[title] => [example glossary]
+[GlossDiv] => [{
+            "title": "S",
+                        "GlossList": {
+                "GlossEntry": {
+                    "ID": "SGML",
+                                        "SortAs": "SGML",
+                                        "GlossTerm": "Standard Generalized Markup Language",
+                                        "Acronym": "SGML",
+                                        "Abbrev": "ISO 8879:1986",
+                                        "GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                                                "GlossSeeAlso": ["GML", "XML"]
+                    },
+                                        "GlossSee": "markup"
+                }
+            }
+        }]
+[title] => [S]
+[GlossList] => [{
+                "GlossEntry": {
+                    "ID": "SGML",
+                                        "SortAs": "SGML",
+                                        "GlossTerm": "Standard Generalized Markup Language",
+                                        "Acronym": "SGML",
+                                        "Abbrev": "ISO 8879:1986",
+                                        "GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                                                "GlossSeeAlso": ["GML", "XML"]
+                    },
+                                        "GlossSee": "markup"
+                }
+            }]
+[GlossEntry] => [{
+                    "ID": "SGML",
+                                        "SortAs": "SGML",
+                                        "GlossTerm": "Standard Generalized Markup Language",
+                                        "Acronym": "SGML",
+                                        "Abbrev": "ISO 8879:1986",
+                                        "GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                                                "GlossSeeAlso": ["GML", "XML"]
+                    },
+                                        "GlossSee": "markup"
+                }]
+[ID] => [SGML]
+[SortAs] => [SGML]
+[GlossTerm] => [Standard Generalized Markup Language]
+[Acronym] => [SGML]
+[Abbrev] => [ISO 8879:1986]
+[GlossDef] => [{
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                                                "GlossSeeAlso": ["GML", "XML"]
+                    }]
+[para] => [A meta-markup language, used to create markup languages such as DocBook.]
+[GlossSeeAlso] => ["GML"]
+[GlossSeeAlso] => [ "XML"]
+[GlossSee] => [markup]
+```
+
 # Features
 - ANSI C (C89).
 - Just one easy function.

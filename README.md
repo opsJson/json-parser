@@ -1,6 +1,8 @@
 # json-parser
 Simple and easy Json Parser in ANSCI C
 
+Just copy and paste one function into your project.
+
 # Quick Start
 ```console
 gcc json.c -o json

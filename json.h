@@ -142,7 +142,7 @@ next_pair:
 					
 					if ((ret = callback(0, 0, 0, 0, element, elementsize, userdata))) return ret;
 					
-					json_parse(element, elementsize, callback, userdata);
+					if ((ret = json_parse(element, elementsize, callback, userdata))) return ret;
 					
 					element = json + i + 1;
 				}

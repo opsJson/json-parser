@@ -5,8 +5,8 @@ Just copy and paste one function into your project.
 
 # Quick Start
 ```console
-gcc json.c -o json
-./json [file.json]
+gcc example.c -o example
+./example [file.json]
 ```
 
 # Features

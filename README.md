@@ -1,5 +1,5 @@
 # json-parser
-Simple and easy Json Parser in ANSCI C
+Simple and easy Json Parser in ANSI C
 
 Just copy and paste one function into your project.
 
